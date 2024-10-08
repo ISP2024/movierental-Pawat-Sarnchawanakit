@@ -42,3 +42,10 @@ class CustomerTest(unittest.TestCase):
         self.assertEqual(0.0, c.get_total_amount())
         c.add_rental(Rental(self.new_movie, 4)) # days
         self.assertEqual(12.0, c.get_total_amount())
+
+    def test_get_rental_points(self):
+        c = Customer("Movie Mogul")
+        self.assertEqual(0, c.get_rental_points())
+        c.add_rental(Rental(self.new_movie, 4)) # days
+        c.add_rental(Rental(self.regular_movie, 3)) # days
+        self.assertEqual(5, c.get_rental_points())
