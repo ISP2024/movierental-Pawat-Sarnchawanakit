@@ -17,13 +17,13 @@ class RentalTest(unittest.TestCase):
     	self.assertEqual("Air", m.get_title())
     	self.assertEqual(Movie.REGULAR, m.get_price_code())
 
-    @unittest.skip("add this test when you refactor rental price")
     def test_rental_price(self):
     	rental = Rental(self.new_movie, 1)
     	self.assertEqual(rental.get_price(), 3.0)
     	rental = Rental(self.new_movie, 5)
     	self.assertEqual(rental.get_price(), 15.0)
-    	self.fail("TODO add more tests for other movie categories")
+    	rental = Rental(self.regular_movie, 3)
+    	self.assertEqual(rental.get_price(), 3.5)
 
     @unittest.skip("add this test of rental points when you add it to Rental")
     def test_rental_points(self):
