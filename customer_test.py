@@ -1,12 +1,13 @@
 import re
-import unittest 
+import unittest
 from customer import Customer
 from rental import Rental
 from movie import Movie
 
-class CustomerTest(unittest.TestCase): 
+
+class CustomerTest(unittest.TestCase):
     """ Tests of the Customer class"""
-    
+
     def setUp(self):
         """Test fixture contains:
         
@@ -17,12 +18,12 @@ class CustomerTest(unittest.TestCase):
         self.new_movie = Movie("Mulan", Movie.NEW_RELEASE)
         self.regular_movie = Movie("CitizenFour", Movie.REGULAR)
         self.childrens_movie = Movie("Frozen", Movie.CHILDRENS)
-        
+
     @unittest.skip("No convenient way to test")
-    def test_billing():
+    def test_billing(self):
         # no convenient way to test billing since its buried in the statement() method.
         pass
-    
+
     def test_statement(self):
         stmt = self.c.statement()
         # get total charges from statement using a regex
@@ -31,21 +32,21 @@ class CustomerTest(unittest.TestCase):
         self.assertIsNotNone(matches)
         self.assertEqual("0.00", matches[1])
         # add a rental
-        self.c.add_rental(Rental(self.new_movie, 4)) # days
+        self.c.add_rental(Rental(self.new_movie, 4))  # days
         stmt = self.c.statement()
-        matches = re.match(pattern, stmt.replace('\n',''), flags=re.DOTALL)
+        matches = re.match(pattern, stmt.replace('\n', ''), flags=re.DOTALL)
         self.assertIsNotNone(matches)
         self.assertEqual("12.00", matches[1])
 
-    def test_get_total_amount(self):
+    def test_get_total_charge(self):
         c = Customer("Movie Mogul")
-        self.assertEqual(0.0, c.get_total_amount())
-        c.add_rental(Rental(self.new_movie, 4)) # days
-        self.assertEqual(12.0, c.get_total_amount())
+        self.assertEqual(0.0, c.get_total_charge())
+        c.add_rental(Rental(self.new_movie, 4))  # days
+        self.assertEqual(12.0, c.get_total_charge())
 
-    def test_get_rental_points(self):
+    def test_get_total_rental_points(self):
         c = Customer("Movie Mogul")
-        self.assertEqual(0, c.get_rental_points())
-        c.add_rental(Rental(self.new_movie, 4)) # days
-        c.add_rental(Rental(self.regular_movie, 3)) # days
-        self.assertEqual(5, c.get_rental_points())
+        self.assertEqual(0, c.get_total_rental_points())
+        c.add_rental(Rental(self.new_movie, 4))  # days
+        c.add_rental(Rental(self.regular_movie, 3))  # days
+        self.assertEqual(5, c.get_total_rental_points())

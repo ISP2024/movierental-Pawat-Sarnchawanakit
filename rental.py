@@ -1,4 +1,6 @@
+"""Implement rental stuff."""
 from movie import Movie
+
 
 class Rental:
     """
@@ -11,42 +13,25 @@ class Rental:
     For simplicity of this application only days_rented is recorded.
     """
 
-    def __init__(self, movie, days_rented): 
+    def __init__(self, movie: Movie, days_rented: int):
         """Initialize a new movie rental object for
             a movie with known rental period (daysRented).
         """
         self.movie = movie
         self.days_rented = days_rented
 
-    def get_movie(self):
+    def get_movie(self) -> Movie:
+        """Get the moving being rented."""
         return self.movie
 
-    def get_days_rented(self):
+    def get_days_rented(self) -> int:
+        """Get number of days rented."""
         return self.days_rented
 
-    def get_price(self):
-        amount = 0
-        if self.movie.get_price_code() == Movie.REGULAR:
-                # Two days for $2, additional days 1.50 per day.
-                amount = 2.0
-                if self.days_rented > 2:
-                    amount += 1.5*(self.days_rented-2)
-        elif self.movie.get_price_code() == Movie.CHILDRENS:
-                # Three days for $1.50, additional days 1.50 per day.
-                amount = 1.5
-                if self.days_rented > 3:
-                    amount += 1.5*(self.days_rented-3)
-        elif self.movie.get_price_code() == Movie.NEW_RELEASE:
-                # Straight $3 per day charge
-                amount = 3*self.days_rented
-        else:
-                log = logging.getLogger()
-                log.error(f"Movie {self.movie} has unrecognized priceCode {self.movie.get_price_code()}")
-        return amount
+    def get_price(self) -> float:
+        """Return the price."""
+        return self.movie.get_price(self.days_rented)
 
-    def rental_points(self):
-        # New release earns 1 point per day rented
-        if self.movie.get_price_code() == Movie.NEW_RELEASE:
-            return self.days_rented
-        # Other rentals get only 1 point
-        return 1
+    def get_rental_points(self) -> int:
+        """Return the rental points."""
+        return self.movie.get_rental_points(self.days_rented)

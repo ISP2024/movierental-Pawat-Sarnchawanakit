@@ -1,11 +1,10 @@
 import unittest
-from customer import Customer
 from rental import Rental
 from movie import Movie
 
 
 class RentalTest(unittest.TestCase):
-    
+
     def setUp(self):
         self.new_movie = Movie("Dune: Part Two", Movie.NEW_RELEASE)
         self.regular_movie = Movie("Air", Movie.REGULAR)
@@ -27,6 +26,6 @@ class RentalTest(unittest.TestCase):
 
     def test_rental_points(self):
         rental = Rental(self.new_movie, 5)
-        self.assertEqual(rental.rental_points(), 5)
+        self.assertEqual(rental.get_rental_points(), 5)
         rental = Rental(self.regular_movie, 5)
-        self.assertEqual(rental.rental_points(), 1)
+        self.assertEqual(rental.get_rental_points(), 1)
