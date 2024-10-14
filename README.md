@@ -18,3 +18,6 @@ Before and after each refactoring you should **run the unit tests**.
 
 See [Resources](https://cpske.github.io/ISP/assignment/movierental/movierental-part1#resources) in the assignment description.
 
+## Rationale
+2.1. Feature Envy
+2.2. Single Responsibility Principle. The Movie class should only know about the movie itself. How to price is is not a property of a movie and may differ in different store and thus isn't the responsibility of the Movie class. Having it store the price strategy adds an additional responsibility on how to price the movie onto the Movie class violating the single resposibility principle.  

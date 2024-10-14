@@ -61,3 +61,8 @@ class ChildrensPrice(PriceStrategy):
     def get_rental_points(self, days: int) -> int:
         """The frequent renter points earned for this rental."""
         return 1
+
+
+NEW_RELEASE = NewRelease()
+REGULAR = RegularPrice()
+CHILDRENS = ChildrensPrice()

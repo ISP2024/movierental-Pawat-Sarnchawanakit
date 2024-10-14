@@ -1,5 +1,6 @@
 """Implement rental stuff."""
 from movie import Movie
+from pricing import PriceStrategy
 
 
 class Rental:
@@ -13,12 +14,17 @@ class Rental:
     For simplicity of this application only days_rented is recorded.
     """
 
-    def __init__(self, movie: Movie, days_rented: int):
+    def __init__(self, movie: Movie, price_code: PriceStrategy, days_rented: int):
         """Initialize a new movie rental object for
             a movie with known rental period (daysRented).
         """
         self.movie = movie
         self.days_rented = days_rented
+        self.price_code = price_code
+
+    def get_price_code(self) -> PriceStrategy:
+        """Get the price strategy."""
+        return self.price_code
 
     def get_movie(self) -> Movie:
         """Get the moving being rented."""
@@ -30,8 +36,8 @@ class Rental:
 
     def get_price(self) -> float:
         """Return the price."""
-        return self.movie.get_price_code().get_price(self.days_rented)
+        return self.price_code.get_price(self.days_rented)
 
     def get_rental_points(self) -> int:
         """Return the rental points."""
-        return self.movie.get_price_code().get_rental_points(self.days_rented)
+        return self.price_code.get_rental_points(self.days_rented)
