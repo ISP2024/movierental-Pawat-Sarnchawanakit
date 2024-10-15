@@ -1,7 +1,9 @@
 """Implement movies stuff."""
+import datetime
 from typing import Collection, Optional, Generator
 from dataclasses import dataclass
 import logging
+import pricing
 
 
 @dataclass(frozen=True)
@@ -20,6 +22,14 @@ class Movie:
     def is_genre(self, genre: str) -> bool:
         """Check if the Movie has that genre."""
         return genre in self.genre
+
+    def price_code_for_movie(self) -> pricing.PriceStrategy:
+        """Get price code for movie."""
+        if self.year == datetime.datetime.now().year:
+            return pricing.NEW_RELEASE
+        if self.is_genre("Children") or self.is_genre("Childrens"):
+            return pricing.CHILDRENS
+        return pricing.REGULAR
 
     def __str__(self) -> str:
         return f"{self.title} ({self.year})"
