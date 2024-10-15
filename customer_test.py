@@ -16,19 +16,17 @@ class CustomerTest(unittest.TestCase):
         movies = list of some movies
         """
         self.c = Customer("Movie Mogul")
-        self.new_movie = (Movie(title="Mulan",
-                                year=1998,
-                                genre=("Animation", "Adventure", "Family")),
-                          pricing.NEW_RELEASE)
-        self.regular_movie = (Movie(title="CitizenFour",
+        self.new_movie = Movie(title="Mulan",
+                                year=2024,
+                                genre=("Animation", "Adventure", "Family"))
+        self.regular_movie = Movie(title="CitizenFour",
                                     year=2014,
                                     genre=("Documentary", "Biography",
-                                           "Thriller")), pricing.REGULAR)
-        self.childrens_movie = (Movie(title="Frozen",
+                                           "Thriller"))
+        self.childrens_movie = Movie(title="Frozen",
                                       year=2013,
-                                      genre=("Animation", "Adventure",
-                                             "Comedy", "Family", "Fantasy")),
-                                pricing.CHILDRENS)
+                                      genre=("Children", "Animation", "Adventure",
+                                             "Comedy", "Family", "Fantasy"))
 
     @unittest.skip("No convenient way to test")
     def test_billing(self):
@@ -43,7 +41,7 @@ class CustomerTest(unittest.TestCase):
         self.assertIsNotNone(matches)
         self.assertEqual("0.00", matches[1])
         # add a rental
-        self.c.add_rental(Rental(*self.new_movie, 4))  # days
+        self.c.add_rental(Rental(self.new_movie, 4))  # days
         stmt = self.c.statement()
         matches = re.match(pattern, stmt.replace('\n', ''), flags=re.DOTALL)
         self.assertIsNotNone(matches)
@@ -52,12 +50,12 @@ class CustomerTest(unittest.TestCase):
     def test_get_total_charge(self):
         c = Customer("Movie Mogul")
         self.assertEqual(0.0, c.get_total_charge())
-        c.add_rental(Rental(*self.new_movie, 4))  # days
+        c.add_rental(Rental(self.new_movie, 4))  # days
         self.assertEqual(12.0, c.get_total_charge())
 
     def test_get_total_rental_points(self):
         c = Customer("Movie Mogul")
         self.assertEqual(0, c.get_total_rental_points())
-        c.add_rental(Rental(*self.new_movie, 4))  # days
-        c.add_rental(Rental(*self.regular_movie, 3))  # days
+        c.add_rental(Rental(self.new_movie, 4))  # days
+        c.add_rental(Rental(self.regular_movie, 3))  # days
         self.assertEqual(5, c.get_total_rental_points())
